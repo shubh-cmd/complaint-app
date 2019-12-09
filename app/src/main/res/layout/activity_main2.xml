@@ -7,17 +7,16 @@
         android:id="@+id/radioButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:padding="16dp"
-        android:text="Personal"
+
+        android:text="@string/Personal"
         android:textSize="36sp" />
 
     <RadioButton
         android:id="@+id/radioButton2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Other"
-        android:layout_marginLeft="16dp"
+        android:text="@string/other"
+
         android:padding="16dp"
         android:textSize="36sp"/>
 </LinearLayout>
