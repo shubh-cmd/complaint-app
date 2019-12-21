@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PersonalActivity extends AppCompatActivity {
 
@@ -37,7 +41,7 @@ public class PersonalActivity extends AppCompatActivity {
         mComplainText= findViewById(R.id.complain_text);
         mSubmitBtn =findViewById(R.id.submit_Btn);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("personal complain");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("personal complaint");
         mProgress = new ProgressDialog(this);
 
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +64,10 @@ public class PersonalActivity extends AppCompatActivity {
 
           if(!TextUtils.isEmpty(nameField) && !TextUtils.isEmpty(roomNum) && !TextUtils.isEmpty(BhawanName) && !TextUtils.isEmpty(MobileNum) && !TextUtils.isEmpty(ComplainText)){
               DatabaseReference personalPost = mDatabase.push();
+              Map map = new HashMap();
+              map.put("timestamp", ServerValue.TIMESTAMP);
 
+              personalPost.updateChildren(map);
               personalPost.child("name").setValue(nameField);
               personalPost.child("room_num").setValue(roomNum);
               personalPost.child("bhawan_name").setValue(BhawanName);

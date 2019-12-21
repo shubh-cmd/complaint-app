@@ -1,5 +1,6 @@
 package com.example.android.complaintapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -17,15 +18,22 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.viewmodel.RequestCodes;
 import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OtherActivity extends AppCompatActivity {
 
@@ -43,6 +51,7 @@ public class OtherActivity extends AppCompatActivity {
 
     private Uri imageUri;
     private Task<Uri> downloadUrl;
+    HashMap<String,String> hashMap;
     private Uri mImageUri =null;
     private int upload_count=0;
 
@@ -64,7 +73,7 @@ public class OtherActivity extends AppCompatActivity {
         mSubmitBtn =findViewById(R.id.submitBtn);
 
         mStorage = FirebaseStorage.getInstance().getReference().child("photos");
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("other_complain");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("other complaint");
 
         mProgress=new ProgressDialog(this);
 
@@ -106,9 +115,13 @@ public class OtherActivity extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(bhawanName) && !TextUtils.isEmpty(complainDes) && mImageUri!=null){
                 DatabaseReference otherPost =mDatabase.push();
+            Map map = new HashMap();
+            map.put("timestamp", ServerValue.TIMESTAMP);
+
+                otherPost.updateChildren(map);
                 otherPost.child("BhawanName").setValue(bhawanName);
                 otherPost.child("ComplainDes").setValue(complainDes);
-                otherPost.child("image").setValue(downloadUrl.toString());
+                otherPost.child("image").setValue(hashMap);
 
             mProgress.dismiss();
             Toast.makeText(OtherActivity.this,"complain submitted",Toast.LENGTH_LONG).show();
@@ -153,15 +166,31 @@ public class OtherActivity extends AppCompatActivity {
                mImageUri = data.getData();
 
 
+
                 // Get a reference to store file at chat_photos/<FILENAME>
-                final StorageReference photoRef = mStorage.child(mImageUri.getLastPathSegment());
-                photoRef.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                 final StorageReference photoRef = mStorage.child(mImageUri.getLastPathSegment());
+                final UploadTask uploadTask = photoRef.putFile(mImageUri);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        downloadUrl =taskSnapshot.getStorage().getDownloadUrl();
+
+                        photoRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                 hashMap = new HashMap<>();
+                                hashMap.put("image", String.valueOf(task));
+                            }
+                        });
+
                         mProgress.dismiss();
                         Toast.makeText(OtherActivity.this,"image selected",Toast.LENGTH_LONG).show();
 
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                            String message = e.toString();
+                            Toast.makeText(OtherActivity.this,message,Toast.LENGTH_LONG).show();
                     }
                 });
             }

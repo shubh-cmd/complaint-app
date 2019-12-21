@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,12 +62,12 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         //initializing views
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editBhawanName = (EditText) findViewById(R.id.editBhawanName);
-        textViewSignin = (TextView) findViewById(R.id.textViewSignin);
+        editTextEmail =  findViewById(R.id.editTextEmail);
+        editTextPassword =  findViewById(R.id.editTextPassword);
+        editBhawanName = findViewById(R.id.editBhawanName);
+        textViewSignin = findViewById(R.id.textViewSignin);
 
-        buttonSignup = (Button) findViewById(R.id.buttonSignup);
+        buttonSignup =  findViewById(R.id.buttonSignup);
 
         progressDialog = new ProgressDialog(this);
 
@@ -149,6 +150,11 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        if(TextUtils.isEmpty(bhawanName)){
+            Toast.makeText(this,"Please enter bhawan name",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //if the email and password are not empty
         //displaying a progress dialog
 
@@ -165,6 +171,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
                             String user_id = firebaseAuth.getCurrentUser().getUid();
                             DatabaseReference current_user_db = mDatabase.child(user_id);
                             current_user_db.child("bhawanName").setValue(bhawanName);
+                            current_user_db.child("image").setValue("default");
                             finish();
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         }else{
@@ -173,7 +180,12 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
                         }
                         progressDialog.dismiss();
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity1.this,e.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
