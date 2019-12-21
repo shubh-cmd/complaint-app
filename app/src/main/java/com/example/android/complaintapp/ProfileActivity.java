@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -23,7 +26,10 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     //view objects
-    private TextView textViewUserEmail;
+    private TextView welcomeMsg;
+    private TextView mPersonalcomplaint;
+    private TextView mOtherComplaint;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -44,11 +51,28 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         //initializing views
-        textViewUserEmail =  findViewById(R.id.textViewUserEmail);
+        welcomeMsg =  findViewById(R.id.welcome);
+        mPersonalcomplaint= findViewById(R.id.personal_complaint);
+        mOtherComplaint = findViewById(R.id.other_complaint);
+
+        mPersonalcomplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this,PersonalcomplaintActivity.class));
+            }
+        });
+
+        mOtherComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this,OthercomplaintActivity.class));
+            }
+        });
 
 
         //displaying logged in user name
-        textViewUserEmail.setText("Welcome ");
+        welcomeMsg.setText("Welcome!");
+
 
 
 
