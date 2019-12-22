@@ -49,7 +49,10 @@ public class PersonalcomplaintActivity extends AppCompatActivity {
 
         mPersonal_complaint_list =  findViewById(R.id.personal_complain_list);
         mPersonal_complaint_list.setHasFixedSize(true);
-        mPersonal_complaint_list.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        mPersonal_complaint_list.setLayoutManager(linearLayoutManager);
         complainList = new ArrayList<>();
         adapter = new ComplainAdapter(this, complainList);
         mPersonal_complaint_list.setAdapter(adapter);

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OtherActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -59,5 +60,8 @@
         android:textSize="26sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:textAppearanceLarge"/>
 </LinearLayout>

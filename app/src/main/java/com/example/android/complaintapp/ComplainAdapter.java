@@ -2,17 +2,24 @@ package com.example.android.complaintapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.text.ParseException;
@@ -32,6 +39,7 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.Compla
      */
     private Context mCtx;
     private List<Complain> complainList;
+    private DatabaseReference mDatabase;
 
 
     public ComplainAdapter(Context mCtx,List<Complain> complainList) {
@@ -52,9 +60,28 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.Compla
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ComplainViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ComplainViewHolder holder, final int position) {
+
         final Complain complain = complainList.get(position);
+
+
         holder.setTimestamp(complain.getTimestamp());
+
+        holder.mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String key = holder.setKey(complain.getKey());
+                Log.v("SHUBHAMKUMAR","hi "+key);
+                mDatabase = FirebaseDatabase.getInstance().getReference().child("personal complaint");
+                mDatabase.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(mCtx,"deleted ",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
         holder.relative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,9 +103,11 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.Compla
     class ComplainViewHolder extends RecyclerView.ViewHolder{
 
         TextView mTimestamp;
+        ImageView mDeleteBtn;
         View mView;
         TextView mName,mMobileNumber,mRoomNumber,mComplainDetail;
         RelativeLayout relative;
+        String key;
 
         public ComplainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +118,10 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.Compla
             mRoomNumber = mView.findViewById(R.id.room_no_View);
             mComplainDetail = mView.findViewById(R.id.complain_detail_View);
             relative = mView.findViewById(R.id.relative);
+            mDeleteBtn = mView.findViewById(R.id.deleteBtn);
+
+
+
 
 
 
@@ -99,10 +132,15 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.Compla
         public void setTimestamp(Long post_time){
 
             mTimestamp = mView.findViewById(R.id.date_view);
-            SimpleDateFormat sfd = new SimpleDateFormat("EEE, MMM d, yyyy          'at' hh:mm aaa");
+            SimpleDateFormat sfd = new SimpleDateFormat("EEE, MMM d, yyyy    hh:mm aaa");
 
             mTimestamp.setText(sfd.format(new Date(post_time)));
 
+        }
+
+        public String setKey(String key) {
+            this.key = key;
+            return this.key;
         }
     }
 }

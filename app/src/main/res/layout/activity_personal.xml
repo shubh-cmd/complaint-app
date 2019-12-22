@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PersonalActivity">
+    tools:context=".PersonalActivity"
+    android:background="@color/background">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -33,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="@string/bhawan" />
+            android:hint="@string/bhawan"/>
 
         <EditText
             android:id="@+id/mobile_no"
@@ -67,6 +68,9 @@
         android:textSize="26sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:textAppearanceLarge"/>
 
 </RelativeLayout>

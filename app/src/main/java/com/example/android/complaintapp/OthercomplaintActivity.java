@@ -44,7 +44,10 @@ public class OthercomplaintActivity extends AppCompatActivity {
 
         mOther_complaint_list =  findViewById(R.id.other_complain_list);
         mOther_complaint_list.setHasFixedSize(true);
-        mOther_complaint_list.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        mOther_complaint_list.setLayoutManager(linearLayoutManager);
         othercomplainList = new ArrayList<>();
         adapter = new OtherComplainAdapter(this, othercomplainList);
         mOther_complaint_list.setAdapter(adapter);

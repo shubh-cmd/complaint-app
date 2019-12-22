@@ -137,7 +137,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
         //getting email and password from edit texts
         String email = editTextEmail.getText().toString().trim();
         String password  = editTextPassword.getText().toString().trim();
-        final String bhawanName = editBhawanName.getText().toString().trim();
+        final String bhawanName = editBhawanName.getText().toString().toLowerCase().trim();
 
         //checking if email and passwords are empty
         if(TextUtils.isEmpty(email)){
