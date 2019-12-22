@@ -3,7 +3,8 @@
     package="com.example.android.complaintapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,18 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OtherdetailsActivity"></activity>
+        <activity android:name=".OtherdetailsActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".OtherdetailsActivity"></activity>
         <activity
             android:name=".DetailsActivity"
             android:label="Complain App"
             android:parentActivityName=".PersonalcomplaintActivity" />
         <activity
             android:name=".OthercomplaintActivity"
-            android:label="Other Complaint"
+            android:label="Complaint App"
             android:parentActivityName=".ProfileActivity" />
         <activity
             android:name=".PersonalcomplaintActivity"
-            android:label="Personal Complaint"
+            android:label="Complaint App"
             android:parentActivityName=".ProfileActivity" />
         <activity
             android:name=".OtherActivity"

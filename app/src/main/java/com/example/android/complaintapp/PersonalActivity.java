@@ -58,12 +58,13 @@ public class PersonalActivity extends AppCompatActivity {
 
           String nameField =mNameField.getText().toString().trim();
           String roomNum =mRoomNum.getText().toString().trim();
-          String BhawanName =mBhawanName.getText().toString().trim();
+          String BhawanName =mBhawanName.getText().toString().toLowerCase().trim();
           String MobileNum =" "+mMobileNum.getText().toString().trim();
           String ComplainText =mComplainText.getText().toString().trim();
 
           if(!TextUtils.isEmpty(nameField) && !TextUtils.isEmpty(roomNum) && !TextUtils.isEmpty(BhawanName) && !TextUtils.isEmpty(MobileNum) && !TextUtils.isEmpty(ComplainText)){
               DatabaseReference personalPost = mDatabase.push();
+
               Map map = new HashMap();
               map.put("timestamp", ServerValue.TIMESTAMP);
 
@@ -73,6 +74,7 @@ public class PersonalActivity extends AppCompatActivity {
               personalPost.child("bhawan_name").setValue(BhawanName);
               personalPost.child("mobile_num").setValue(MobileNum);
               personalPost.child("complain_text").setValue(ComplainText);
+              personalPost.child("key").setValue(personalPost.getKey());
 
               mProgress.dismiss();
               Toast.makeText(PersonalActivity.this,"complain submitted",Toast.LENGTH_LONG).show();

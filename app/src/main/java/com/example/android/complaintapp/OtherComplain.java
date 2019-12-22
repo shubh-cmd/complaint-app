@@ -5,6 +5,7 @@ public class OtherComplain {
 
     private String ComplainDes;
     private String image;
+    private String key;
 
     private long timestamp;
 
@@ -32,12 +33,13 @@ public class OtherComplain {
 
     }
 
-    public OtherComplain(String ComplainDes,String image,long timestamp) {
+    public OtherComplain(String ComplainDes,String image,String key,long timestamp) {
 
 
         this.ComplainDes = ComplainDes;
         this.image = image;
         this.timestamp = timestamp;
+        this.key=key;
     }
 
     public String getImage() {
@@ -46,5 +48,13 @@ public class OtherComplain {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

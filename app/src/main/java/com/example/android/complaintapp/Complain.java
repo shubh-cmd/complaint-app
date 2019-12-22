@@ -8,6 +8,7 @@ public class Complain {
     private String name;
     private String room_num;
     private long timestamp;
+    private String key;
 
 
 
@@ -48,13 +49,14 @@ public class Complain {
 
     }
 
-    public Complain(String bhawan_name,String complain_text,String mobile_num,String name, String room_num,long timestamp) {
+    public Complain(String bhawan_name,String complain_text,String mobile_num,String name, String room_num,String key,long timestamp) {
 
         this.complain_text = complain_text;
         this.mobile_num = mobile_num;
         this.name = name;
         this.room_num = room_num;
         this.timestamp = timestamp;
+        this.key=key;
     }
 
 
@@ -68,4 +70,11 @@ public class Complain {
     }
 
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }

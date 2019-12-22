@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@color/background">
 
 
     <LinearLayout
@@ -42,7 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Sign in" />
+            android:text="Sign in"
+            android:background="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:textAppearanceLarge"/>
 
         <TextView
             android:text="Not have an account? Signup Here"

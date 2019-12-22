@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.viewmodel.RequestCodes;
 import com.google.android.gms.auth.api.signin.internal.Storage;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +41,7 @@ public class OtherActivity extends AppCompatActivity {
     private EditText mBhawanName;
     private EditText mComplainDes;
     private Button mSubmitBtn;
+    private int CAMERA_PERMISSION_CODE = 1;
 
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
@@ -50,8 +50,8 @@ public class OtherActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE= 1;
 
     private Uri imageUri;
+    private Uri downloadUri;
     private Task<Uri> downloadUrl;
-    HashMap<String,String> hashMap;
     private Uri mImageUri =null;
     private int upload_count=0;
 
@@ -80,6 +80,7 @@ public class OtherActivity extends AppCompatActivity {
         mGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
@@ -110,7 +111,7 @@ public class OtherActivity extends AppCompatActivity {
         mProgress.setMessage("submitting complain");
         mProgress.show();
 
-        String bhawanName= mBhawanName.getText().toString().trim();
+        String bhawanName= mBhawanName.getText().toString().toLowerCase().trim();
         String complainDes= mComplainDes.getText().toString().trim();
 
         if(!TextUtils.isEmpty(bhawanName) && !TextUtils.isEmpty(complainDes) && mImageUri!=null){
@@ -121,7 +122,8 @@ public class OtherActivity extends AppCompatActivity {
                 otherPost.updateChildren(map);
                 otherPost.child("BhawanName").setValue(bhawanName);
                 otherPost.child("ComplainDes").setValue(complainDes);
-                otherPost.child("image").setValue(hashMap);
+                otherPost.child("image").setValue(downloadUri.toString());
+            otherPost.child("key").setValue(otherPost.getKey());
 
             mProgress.dismiss();
             Toast.makeText(OtherActivity.this,"complain submitted",Toast.LENGTH_LONG).show();
@@ -147,14 +149,25 @@ public class OtherActivity extends AppCompatActivity {
 
                for(upload_count=0;upload_count<imageList.size();upload_count++){
                    mImageUri =imageList.get(upload_count);
-                   StorageReference imageName=mStorage.child(mImageUri.getLastPathSegment());
+                   final StorageReference imageName=mStorage.child(mImageUri.getLastPathSegment());
                    imageName.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                        @Override
                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           downloadUrl =taskSnapshot.getStorage().getDownloadUrl();
+                           imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                               @Override
+                               public void onSuccess(Uri uri) {
+                                   downloadUri = uri;
+                               }
+                           });
                            mProgress.dismiss();
                            Toast.makeText(OtherActivity.this,"image selected",Toast.LENGTH_LONG).show();
 
+                       }
+                   }).addOnFailureListener(new OnFailureListener() {
+                       @Override
+                       public void onFailure(@NonNull Exception e) {
+                           String message = e.toString();
+                           Toast.makeText(OtherActivity.this,message,Toast.LENGTH_LONG).show();
                        }
                    });
                }
@@ -169,19 +182,17 @@ public class OtherActivity extends AppCompatActivity {
 
                 // Get a reference to store file at chat_photos/<FILENAME>
                  final StorageReference photoRef = mStorage.child(mImageUri.getLastPathSegment());
-                final UploadTask uploadTask = photoRef.putFile(mImageUri);
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                 photoRef.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        photoRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
+                        photoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onComplete(@NonNull Task<Uri> task) {
-                                 hashMap = new HashMap<>();
-                                hashMap.put("image", String.valueOf(task));
+                            public void onSuccess(Uri uri) {
+                                 downloadUri = uri;
                             }
                         });
-
                         mProgress.dismiss();
                         Toast.makeText(OtherActivity.this,"image selected",Toast.LENGTH_LONG).show();
 
@@ -203,14 +214,25 @@ public class OtherActivity extends AppCompatActivity {
             mProgress.setMessage("selecting image");
             mProgress.show();
             mImageUri=data.getData();
-            StorageReference filePath =mStorage.child("photos").child(mImageUri.getLastPathSegment());
+            final StorageReference filePath =mStorage.child("photos").child(mImageUri.getLastPathSegment());
             filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    downloadUrl =taskSnapshot.getStorage().getDownloadUrl();
+                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            downloadUri = uri;
+                        }
+                    });
 
                     mProgress.dismiss();
                     Toast.makeText(OtherActivity.this,"image selected",Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    String message = e.toString();
+                    Toast.makeText(OtherActivity.this,message,Toast.LENGTH_LONG).show();
                 }
             });
         }
