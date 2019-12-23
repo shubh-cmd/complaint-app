@@ -39,6 +39,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
     private EditText editBhawanName;
 
     private TextView textViewSignin;
+    private TextView mStudentPage;
 
     private ProgressDialog progressDialog;
 
@@ -66,13 +67,15 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
         editTextPassword =  findViewById(R.id.editTextPassword);
         editBhawanName = findViewById(R.id.editBhawanName);
         textViewSignin = findViewById(R.id.textViewSignin);
+        mStudentPage = findViewById(R.id.student_view);
 
         buttonSignup =  findViewById(R.id.buttonSignup);
 
         progressDialog = new ProgressDialog(this);
 
 
-        String text = "Already Registered? Signin Here";
+        String text = "Already Registered? Signin here";
+        String studentText = "Student? Click here";
 
         SpannableString ss = new SpannableString(text);
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -87,10 +90,22 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
         textViewSignin.setText(ss);
         textViewSignin.setMovementMethod(LinkMovementMethod.getInstance());
 
+        SpannableString sss = new SpannableString(studentText);
+        ClickableSpan clickableSpanStudent = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                progressDialog.show();
+                startActivity(new Intent(MainActivity1.this, MainActivity2.class));
+            }
+        };
+
+        sss.setSpan(clickableSpanStudent,9,14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mStudentPage.setText(sss);
+        mStudentPage.setMovementMethod(LinkMovementMethod.getInstance());
 
         //attaching listener to button
         buttonSignup.setOnClickListener(this);
-        textViewSignin.setOnClickListener(this);
+
 
         //if getCurrentUser does not returns null
         if(firebaseAuth.getCurrentUser() != null){

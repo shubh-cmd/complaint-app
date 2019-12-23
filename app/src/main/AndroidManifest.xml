@@ -39,37 +39,27 @@
         <activity
             android:name=".LoginActivity"
             android:label="Complaint App"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
+            android:parentActivityName=".MainActivity1" />
+        <activity android:name=".MainActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity1"
-            android:label="@string/app_name"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+
         <activity
             android:name=".MainActivity2"
             android:label="Complain Type"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".ProfileActivity"
-            android:label="Complaint App"
             android:parentActivityName=".MainActivity1">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity1" />
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Complaint App">
+
         </activity>
     </application>
 
