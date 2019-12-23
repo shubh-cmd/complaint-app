@@ -108,25 +108,58 @@ public class OtherActivity extends AppCompatActivity {
     }
 
     private void startPosting(){
-        mProgress.setMessage("submitting complain");
-        mProgress.show();
 
         String bhawanName= mBhawanName.getText().toString().toLowerCase().trim();
         String complainDes= mComplainDes.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(bhawanName) && !TextUtils.isEmpty(complainDes) && mImageUri!=null){
-                DatabaseReference otherPost =mDatabase.push();
+        if(TextUtils.isEmpty(bhawanName)) {
+            Toast.makeText(this," enter bhawan name",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        if(TextUtils.isEmpty(complainDes)) {
+            Toast.makeText(this," enter complain",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(!TextUtils.isEmpty(bhawanName) && !TextUtils.isEmpty(complainDes) && mImageUri==null){
+            mProgress.setMessage("submitting complain");
+            mProgress.show();
+
+
+            DatabaseReference otherPost = mDatabase.push();
             Map map = new HashMap();
             map.put("timestamp", ServerValue.TIMESTAMP);
 
-                otherPost.updateChildren(map);
-                otherPost.child("BhawanName").setValue(bhawanName);
-                otherPost.child("ComplainDes").setValue(complainDes);
-                otherPost.child("image").setValue(downloadUri.toString());
+            otherPost.updateChildren(map);
+            otherPost.child("BhawanName").setValue(bhawanName);
+            otherPost.child("ComplainDes").setValue(complainDes);
             otherPost.child("key").setValue(otherPost.getKey());
 
             mProgress.dismiss();
-            Toast.makeText(OtherActivity.this,"complain submitted",Toast.LENGTH_LONG).show();
+            Toast.makeText(OtherActivity.this, "complain submitted", Toast.LENGTH_LONG).show();
+
+        }
+
+
+         if(!TextUtils.isEmpty(bhawanName) && !TextUtils.isEmpty(complainDes) && mImageUri!=null) {
+            mProgress.setMessage("submitting complain");
+            mProgress.show();
+
+
+            DatabaseReference otherPost = mDatabase.push();
+            Map map = new HashMap();
+            map.put("timestamp", ServerValue.TIMESTAMP);
+
+            otherPost.updateChildren(map);
+            otherPost.child("BhawanName").setValue(bhawanName);
+            otherPost.child("ComplainDes").setValue(complainDes);
+            otherPost.child("image").setValue(downloadUri.toString());
+            otherPost.child("key").setValue(otherPost.getKey());
+
+            mProgress.dismiss();
+            Toast.makeText(OtherActivity.this, "complain submitted", Toast.LENGTH_LONG).show();
         }
     }
 

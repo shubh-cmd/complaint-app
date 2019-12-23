@@ -14,15 +14,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -30,13 +29,7 @@ import java.util.List;
 public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.ComplainViewHolder>{
 
 
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
 
-     * @param options
-     */
     private Context mCtx;
     private List<Complain> complainList;
     private DatabaseReference mDatabase;
@@ -72,7 +65,7 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.Compla
             public void onClick(View v) {
 
                 String key = holder.setKey(complain.getKey());
-                Log.v("SHUBHAMKUMAR","hi "+key);
+
                 mDatabase = FirebaseDatabase.getInstance().getReference().child("personal complaint");
                 mDatabase.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

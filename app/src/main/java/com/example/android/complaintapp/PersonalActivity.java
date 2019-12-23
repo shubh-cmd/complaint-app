@@ -53,8 +53,7 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     private void startPostingComplain() {
-          mProgress.setMessage("submitting complain");
-          mProgress.show();
+
 
           String nameField =mNameField.getText().toString().trim();
           String roomNum =mRoomNum.getText().toString().trim();
@@ -62,7 +61,34 @@ public class PersonalActivity extends AppCompatActivity {
           String MobileNum =" "+mMobileNum.getText().toString().trim();
           String ComplainText =mComplainText.getText().toString().trim();
 
-          if(!TextUtils.isEmpty(nameField) && !TextUtils.isEmpty(roomNum) && !TextUtils.isEmpty(BhawanName) && !TextUtils.isEmpty(MobileNum) && !TextUtils.isEmpty(ComplainText)){
+          if(TextUtils.isEmpty(nameField)) {
+              Toast.makeText(this,"Please enter name",Toast.LENGTH_LONG).show();
+              return;
+          }
+
+        if(TextUtils.isEmpty(roomNum)) {
+            Toast.makeText(this," enter room number",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(BhawanName)) {
+            Toast.makeText(this," enter bhawan name",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(MobileNum)) {
+            Toast.makeText(this," enter mobile number",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(ComplainText)) {
+            Toast.makeText(this,"enter name complain",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+              mProgress.setMessage("submitting complain");
+              mProgress.show();
+
               DatabaseReference personalPost = mDatabase.push();
 
               Map map = new HashMap();
@@ -78,7 +104,7 @@ public class PersonalActivity extends AppCompatActivity {
 
               mProgress.dismiss();
               Toast.makeText(PersonalActivity.this,"complain submitted",Toast.LENGTH_LONG).show();
-          }
+
 
     }
 }
