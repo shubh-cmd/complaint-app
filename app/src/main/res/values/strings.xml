@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Complaint App</string>
+    <string name="manager">MANAGER</string>
+    <string name="student">STUDENT</string>
+    <string name="Personal">PERSONAL</string>
+    <string name="other">OTHER</string>
+    <string name="next">Next</string>
+    <string name="name">Enter name</string>
+    <string name="room_no">Enter room no.</string>
+    <string name="bhawan">Enter bhawan name</string>
+    <string name="Mob_no">Enter mobile no.</string>
+    <string name="complain">Write complain here...</string>
+    <string name="submit">Submit</string>
+    <string name="sign_out">Log Out</string>
+</resources>

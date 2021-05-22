@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.android.complaintapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".OtherdetailsActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".OtherdetailsActivity"></activity>
+        <activity
+            android:name=".DetailsActivity"
+            android:label="Complain App"
+            android:parentActivityName=".PersonalcomplaintActivity" />
+        <activity
+            android:name=".OthercomplaintActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".ProfileActivity" />
+        <activity
+            android:name=".PersonalcomplaintActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".ProfileActivity" />
+        <activity
+            android:name=".OtherActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".MainActivity2" />
+        <activity
+            android:name=".PersonalActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".MainActivity2" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Complaint App"
+            android:parentActivityName=".MainActivity1" />
+        <activity android:name=".MainActivity1">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity2"
+            android:label="Complain Type"
+            android:parentActivityName=".MainActivity1">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity1" />
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Complaint App">
+
+        </activity>
+    </application>
+
+</manifest>
