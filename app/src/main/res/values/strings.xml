@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Complaint App</string>
+    <string name="manager">MANAGER</string>
+    <string name="student">STUDENT</string>
+    <string name="Personal">PERSONAL</string>
+    <string name="other">OTHER</string>
+    <string name="next">Next</string>
+    <string name="name">Enter name</string>
+    <string name="room_no">Enter room no.</string>
+    <string name="bhawan">Enter bhawan name</string>
+    <string name="Mob_no">Enter mobile no.</string>
+    <string name="complain">Write complain here...</string>
+    <string name="submit">Submit</string>
+    <string name="sign_out">Log Out</string>
+
+    <!-- Label for dropdown menu option if the pet's gender is unknown [CHAR LIMIT=20] -->
+    <string name="bhawan_0">Aazad</string>
+    <string name="bhawan_1">Cautley</string>
+    <string name="bhawan_2">Ganga</string>
+    <string name="bhawan_3">Govind</string>
+    <string name="bhawan_4">Kasturba</string>
+    <string name="bhawan_5">Rajendra</string>
+    <string name="bhawan_6">Radhakrishnan</string>
+    <string name="bhawan_7">Rajiv</string>
+
+    <!-- Label for dropdown menu option if the pet is male [CHAR LIMIT=20] -->
+
+
+    <!-- Label for dropdown menu option if the pet is female [CHAR LIMIT=20] -->
+
+    <string name="bhawan_8">Sarojini</string>
+
+
+
+</resources>
