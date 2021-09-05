@@ -31,16 +31,16 @@
         <activity
             android:name=".OtherActivity"
             android:label="Complaint App"
-            android:parentActivityName=".MainActivity2" />
+            android:parentActivityName=".AddComlaintActivity" />
         <activity
             android:name=".PersonalActivity"
             android:label="Complaint App"
-            android:parentActivityName=".MainActivity2" />
+            android:parentActivityName=".AddComlaintActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="Complaint App"
-            android:parentActivityName=".MainActivity1" />
-        <activity android:name=".MainActivity1">
+            android:parentActivityName=".SignUpActivity" />
+        <activity android:name=".SignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,12 +49,12 @@
         </activity>
 
         <activity
-            android:name=".MainActivity2"
+            android:name=".AddComlaintActivity"
             android:label="Complain Type"
-            android:parentActivityName=".MainActivity1">
+            android:parentActivityName=".SignUpActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity1" />
+                android:value=".SignUpActivity" />
         </activity>
         <activity
             android:name=".ProfileActivity"

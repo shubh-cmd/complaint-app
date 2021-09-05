@@ -1,6 +1,5 @@
 package com.example.android.complaintapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,7 @@ import android.widget.RadioButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity2 extends AppCompatActivity implements View.OnClickListener{
+public class AddComlaintActivity extends AppCompatActivity implements View.OnClickListener{
 
     private RadioButton mPersonal;
     private RadioButton mOther;
@@ -46,7 +45,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                     mNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(MainActivity2.this,PersonalActivity.class));
+                            startActivity(new Intent(AddComlaintActivity.this,PersonalActivity.class));
                         }
                     });
 
@@ -59,7 +58,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 mNext.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(MainActivity2.this,OtherActivity.class));
+                        startActivity(new Intent(AddComlaintActivity.this,OtherActivity.class));
                     }
                 });
                 break;

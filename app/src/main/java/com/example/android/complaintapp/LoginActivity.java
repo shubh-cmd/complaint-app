@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                     finish();
-                    startActivity(new Intent(LoginActivity.this, MainActivity1.class));
+                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
 
 
             }
